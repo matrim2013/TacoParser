@@ -33,8 +33,18 @@ namespace LoggingKata
 
             // Now that your Parse method is completed, START BELOW ----------
 
+
             // TODO: Create two `ITrackable` variables with initial values of `null`. These will be used to store your two taco bells that are the farthest from each other.
             // Create a `double` variable to store the distance
+
+            ITrackable locationA = new TacoBell();
+            ITrackable locationB = new TacoBell();
+            ITrackable locA = new TacoBell();
+            ITrackable locB = new TacoBell();
+
+            double distance = 0.00;
+         
+
 
             // Include the Geolocation toolbox, so you can compare locations: `using GeoCoordinatePortable;`
 
@@ -52,8 +62,34 @@ namespace LoggingKata
 
             // Once you've looped through everything, you've found the two Taco Bells farthest away from each other.
 
+            for (var i = 0; i < locations.Length; i++)
+            {
+                locationA = locations[i];
 
-            
+                var corA = new GeoCoordinate();
+                corA.Latitude = locationA.Location.Latitude;
+                corA.Longitude = locationA.Location.Longitude;
+
+                for(var j=0; j< locations.Length; j++)
+                {
+
+                    locationB = locations[j];
+                    
+                    var corB = new GeoCoordinate();
+                    corB.Latitude = locationB.Location.Latitude;
+                    corB.Longitude = locationB.Location.Longitude;
+  
+                    if (corA.GetDistanceTo(corB) > distance)
+                    {
+                        distance = corA.GetDistanceTo(corB);
+                        locA = locationA;
+                        locB = locationB;
+                    }
+                }
+            }
+
+            Console.WriteLine($"{locA.Name} and {locB.Name} are {Math.Round(distance * 0.000621371, 2)} miles apart.");
+
         }
     }
 }
